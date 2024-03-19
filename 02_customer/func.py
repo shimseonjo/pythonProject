@@ -70,3 +70,42 @@ def next_data(custlist,page):
     print(f'현재 페이지는 {page+1}쪽입니다.')
     print(custlist[page])
   return page   
+
+def delete_data(custlist):
+  choice1 = input('삭제하려는 이메일을 입력하세요 >>>')
+  delok = 0
+  for i,item in enumerate(custlist):
+      if item['email'] == choice1:
+          name = custlist.pop(i)['name']
+          print(f'{name} 고객님의 정보가 삭제되었습니다.')
+          delok = 1
+          break
+  if delok == 0:
+      print('등록되지 않는 이메일입니다.')
+      print(custlist)
+  return len(custlist)-1
+
+def update_data(custlist):
+  while True:
+    choice1 = input('수정하려는 이메일을 입력하세요 >>>')
+    idx = -1 
+    for i in range(0,len(custlist)):
+        if custlist[i]['email'] == choice1:
+            idx = i
+            break
+    if idx == -1:
+        print('등록되지 않은 이메일 입니다.')
+        break
+    choice2 = input('''
+다음 중 수정할 항목을 입력하세요
+(name,gender,birthyear)
+수정할 정보가 없으면 "exit"
+>>> ''')
+    if choice2 in ('name','gender','birthyear'):
+        custlist[idx][choice2]=input(f'수정할 {choice2}를 입력하세요 >>> ')
+        break
+    elif choice2 == 'exit':
+        break
+    else:
+        print('존재하지 않는 정보입니다.')
+        break  
